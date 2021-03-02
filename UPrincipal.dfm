@@ -16,7 +16,7 @@ object Form1: TForm1
   object Label1: TLabel
     Left = 8
     Top = 25
-    Width = 305
+    Width = 32
     Height = 16
     Alignment = taCenter
     Caption = 'Input'
@@ -30,7 +30,7 @@ object Form1: TForm1
   object Label2: TLabel
     Left = 336
     Top = 25
-    Width = 305
+    Width = 42
     Height = 16
     Alignment = taCenter
     Caption = 'Output'

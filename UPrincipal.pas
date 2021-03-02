@@ -46,7 +46,7 @@ begin
     .Replace('group by', SLineBreak + 'group by').Replace('and', SLineBreak + 'and')
     .Replace('order by', SLineBreak + 'order by').Replace('iif(', SLineBreak + 'iif(')
     .Replace('cast', SLineBreak + 'cast').Replace('sum', SLineBreak + 'sum')
-    .Replace('from', SLineBreak + 'from');
+    .Replace('from', SLineBreak + 'from').Replace('''''','''');
 end;
 
 end.
