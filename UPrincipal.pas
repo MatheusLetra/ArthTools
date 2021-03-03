@@ -14,6 +14,8 @@ type
     Label1: TLabel;
     Label2: TLabel;
     procedure Button1Click(Sender: TObject);
+    procedure Memo2KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure Memo1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     function FormatText(OriginalText: String):String;
@@ -47,6 +49,36 @@ begin
     .Replace('order by', SLineBreak + 'order by').Replace('iif(', SLineBreak + 'iif(')
     .Replace('cast', SLineBreak + 'cast').Replace('sum', SLineBreak + 'sum')
     .Replace('from', SLineBreak + 'from').Replace('''''','''');
+
+  if Copy(Result,1,1) = '''' then
+  begin
+    Result := Copy(Result,2,Result.Length);
+  end;
+
+  if Copy(Result,length(Result),1) = '''' then
+  begin
+    Result := copy(Result,0,length(Result)-1);;
+  end;
+end;
+
+procedure TForm1.Memo1KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (Key = Ord('A')) and (ssCtrl in Shift) then
+  begin
+    TMemo(Sender).SelectAll;
+    Key := 0;
+  end;
+end;
+
+procedure TForm1.Memo2KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (Key = Ord('A')) and (ssCtrl in Shift) then
+  begin
+    TMemo(Sender).SelectAll;
+    Key := 0;
+  end;
 end;
 
 end.

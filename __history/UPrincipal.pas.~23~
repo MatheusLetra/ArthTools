@@ -11,7 +11,11 @@ type
     Memo1: TMemo;
     Memo2: TMemo;
     Button1: TButton;
+    Label1: TLabel;
+    Label2: TLabel;
     procedure Button1Click(Sender: TObject);
+    procedure Memo2KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure Memo1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     function FormatText(OriginalText: String):String;
@@ -30,6 +34,7 @@ procedure TForm1.Button1Click(Sender: TObject);
 var
   FormatedText: String;
 begin
+  Memo2.Lines.Clear;
   FormatedText := FormatText(Memo1.Lines.Text);
   Memo2.Lines.Add(FormatedText);
 end;
@@ -39,10 +44,32 @@ begin
   Result := '';
   Result := OriginalText.Replace('union all', SLineBreak + 'union all' + SLineBreak)
     .Replace('left', SLineBreak + 'left').Replace('inner', SLineBreak + 'inner')
-    .Replace('where', SLineBreak + 'where').Replace('group by', SLineBreak + 'group by')
+    .Replace('right', SLineBreak + 'right').Replace('where', SLineBreak + 'where')
+    .Replace('group by', SLineBreak + 'group by').Replace('and', SLineBreak + 'and')
     .Replace('order by', SLineBreak + 'order by').Replace('iif(', SLineBreak + 'iif(')
     .Replace('cast', SLineBreak + 'cast').Replace('sum', SLineBreak + 'sum')
-    .Replace('from', SLineBreak + 'from').Replace('\"','''');
+    .Replace('from', SLineBreak + 'from').Replace('''''','''');
+end;
+
+procedure TForm1.Memo1KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (Key = Ord('A')) and (ssCtrl in Shift) then
+  begin
+    TMemo(Sender).SelectAll;
+    Key := 0;
+  end;
+end;
+
+procedure TForm1.Memo2KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (Key = Ord('A')) and (ssCtrl in Shift) then
+
+  begin
+    TMemo(Sender).SelectAll;
+    Key := 0;
+  end;
 end;
 
 end.
