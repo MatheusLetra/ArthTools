@@ -13,9 +13,11 @@ type
     Button1: TButton;
     Label1: TLabel;
     Label2: TLabel;
+    Button2: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Memo2KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Memo1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure Button2Click(Sender: TObject);
   private
     { Private declarations }
     function FormatText(OriginalText: String):String;
@@ -37,6 +39,12 @@ begin
   Memo2.Lines.Clear;
   FormatedText := FormatText(Memo1.Lines.Text);
   Memo2.Lines.Add(FormatedText);
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+  Memo1.Lines.Clear;
+  Memo2.Lines.Clear;
 end;
 
 function TForm1.FormatText(OriginalText: String): String;

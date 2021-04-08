@@ -60,12 +60,21 @@ object Form1: TForm1
     OnKeyDown = Memo2KeyDown
   end
   object Button1: TButton
-    Left = 240
+    Left = 553
     Top = 440
-    Width = 169
+    Width = 89
     Height = 49
     Caption = 'GO!'
     TabOrder = 2
     OnClick = Button1Click
+  end
+  object Button2: TButton
+    Left = 440
+    Top = 440
+    Width = 99
+    Height = 49
+    Caption = 'Clear'
+    TabOrder = 3
+    OnClick = Button2Click
   end
 end
