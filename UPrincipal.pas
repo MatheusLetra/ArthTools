@@ -4,22 +4,47 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Data.DB,
+  Datasnap.DBClient, Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls, Vcl.Menus;
 
 type
   TForm1 = class(TForm)
+    PageControl1: TPageControl;
+    TabNewSQL: TTabSheet;
+    TabHistory: TTabSheet;
     Memo1: TMemo;
     Memo2: TMemo;
-    Button1: TButton;
-    Label1: TLabel;
     Label2: TLabel;
+    Label1: TLabel;
     Button2: TButton;
+    Button1: TButton;
+    History: TClientDataSet;
+    dsHistory: TDataSource;
+    HistoryID: TIntegerField;
+    HistoryINPUT: TMemoField;
+    HistoryOUTPUT: TMemoField;
+    DBGrid1: TDBGrid;
+    Panel1: TPanel;
+    btnClearHistory: TButton;
+    PopupMenu1: TPopupMenu;
+    Delete1: TMenuItem;
+    Copy1: TMenuItem;
     procedure Button1Click(Sender: TObject);
     procedure Memo2KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Memo1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Button2Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btnClearHistoryClick(Sender: TObject);
+    procedure HistoryOUTPUTGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure HistoryINPUTGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure Delete1Click(Sender: TObject);
+    procedure Copy1Click(Sender: TObject);
   private
     { Private declarations }
+    PathExe : String;
     function FormatText(OriginalText: String):String;
   public
     { Public declarations }
@@ -32,6 +57,11 @@ implementation
 
 {$R *.dfm}
 
+procedure TForm1.btnClearHistoryClick(Sender: TObject);
+begin
+   History.EmptyDataSet;
+end;
+
 procedure TForm1.Button1Click(Sender: TObject);
 var
   FormatedText: String;
@@ -39,12 +69,28 @@ begin
   Memo2.Lines.Clear;
   FormatedText := FormatText(Memo1.Lines.Text);
   Memo2.Lines.Add(FormatedText);
+  History.Append;
+  HistoryINPUT.Assign(Memo1.Lines);
+  HistoryOUTPUT.Assign(Memo2.Lines);
+  History.Post;
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
   Memo1.Lines.Clear;
   Memo2.Lines.Clear;
+end;
+
+procedure TForm1.Copy1Click(Sender: TObject);
+begin
+  Memo1.Lines.Text := HistoryINPUT.Text;
+  Memo2.Lines.Text := HistoryOUTPUT.Text;
+  PageControl1.ActivePage := TabNewSQL;
+end;
+
+procedure TForm1.Delete1Click(Sender: TObject);
+begin
+  History.Delete;
 end;
 
 function TForm1.FormatText(OriginalText: String): String;
@@ -67,6 +113,40 @@ begin
   begin
     Result := copy(Result,0,length(Result)-1);;
   end;
+end;
+
+procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  if not (History.IsEmpty) then
+    History.SaveToFile( PathExe + 'OldHistory.xml')
+  else
+  begin
+    if FileExists(PathExe + 'OldHistory.xml')  then
+      DeleteFile(PathExe + 'OldHistory.xml')
+  end;
+  History.Close;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  PathExe := ExtractFilePath(Application.ExeName);
+  History.CreateDataSet;
+  History.Open;
+  if (FileExists(PathExe + 'OldHistory.xml')) then
+    History.LoadFromFile(PathExe + 'OldHistory.xml');
+  History.Last;
+end;
+
+procedure TForm1.HistoryINPUTGetText(Sender: TField; var Text: string;
+  DisplayText: Boolean);
+begin
+  Text := Copy(HistoryINPUT.AsString, 1, 600000);
+end;
+
+procedure TForm1.HistoryOUTPUTGetText(Sender: TField; var Text: string;
+  DisplayText: Boolean);
+begin
+  Text := Copy(HistoryOUTPUT.AsString, 1, 600000);
 end;
 
 procedure TForm1.Memo1KeyDown(Sender: TObject; var Key: Word;
