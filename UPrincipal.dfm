@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'SQL Formatter'
-  ClientHeight = 508
+  ClientHeight = 547
   ClientWidth = 650
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,12 +19,14 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 650
-    Height = 508
+    Height = 547
     ActivePage = TabNewSQL
     Align = alClient
     TabOrder = 0
+    ExplicitHeight = 508
     object TabNewSQL: TTabSheet
       Caption = 'Format SQL'
+      ExplicitHeight = 480
       object Label2: TLabel
         Left = 336
         Top = 25
@@ -53,6 +55,24 @@ object Form1: TForm1
         Font.Style = [fsBold]
         ParentFont = False
       end
+      object versionDetails: TLabel
+        Left = 0
+        Top = 487
+        Width = 642
+        Height = 32
+        Align = alBottom
+        Caption = 'Developed by Matheus Letra'
+        Color = clBtnHighlight
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlue
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        Layout = tlCenter
+        ExplicitTop = 488
+      end
       object Memo1: TMemo
         Left = 8
         Top = 44
@@ -71,36 +91,53 @@ object Form1: TForm1
         TabOrder = 1
         OnKeyDown = Memo2KeyDown
       end
-      object Button2: TButton
-        Left = 440
-        Top = 431
-        Width = 99
-        Height = 49
-        Caption = 'Clear'
+      object Panel2: TPanel
+        Left = 0
+        Top = 439
+        Width = 642
+        Height = 48
+        Align = alBottom
         TabOrder = 2
-        OnClick = Button2Click
-      end
-      object Button1: TButton
-        Left = 553
-        Top = 431
-        Width = 89
-        Height = 49
-        Caption = 'GO!'
-        TabOrder = 3
-        OnClick = Button1Click
+        ExplicitTop = 454
+        object Button2: TButton
+          Left = 1
+          Top = 1
+          Width = 99
+          Height = 46
+          Align = alLeft
+          Caption = 'Clear'
+          TabOrder = 0
+          OnClick = Button2Click
+          ExplicitLeft = 3
+          ExplicitTop = -8
+          ExplicitHeight = 49
+        end
+        object Button1: TButton
+          Left = 552
+          Top = 1
+          Width = 89
+          Height = 46
+          Align = alRight
+          Caption = 'GO!'
+          TabOrder = 1
+          OnClick = Button1Click
+          ExplicitLeft = 517
+          ExplicitTop = 2
+        end
       end
     end
     object TabHistory: TTabSheet
       Caption = 'Recent History'
       ImageIndex = 1
+      ExplicitHeight = 480
       object DBGrid1: TDBGrid
         Left = 0
         Top = 0
         Width = 642
-        Height = 425
+        Height = 464
         Align = alClient
         DataSource = dsHistory
-        Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+        Options = [dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
         PopupMenu = PopupMenu1
         ReadOnly = True
         TabOrder = 0
@@ -120,7 +157,7 @@ object Form1: TForm1
       end
       object Panel1: TPanel
         Left = 0
-        Top = 425
+        Top = 464
         Width = 642
         Height = 55
         Align = alBottom

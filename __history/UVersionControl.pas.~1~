@@ -1,0 +1,11 @@
+unit UVersionControl;
+
+interface
+
+const
+  VERSION = 1;
+  RELEASE = 1;
+
+implementation
+
+end.

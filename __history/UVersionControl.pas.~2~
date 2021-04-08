@@ -1,0 +1,12 @@
+unit UVersionControl;
+
+interface
+
+const
+  AUTHOR = 'Matheus Letra';
+  VERSION = 1;
+  RELEASE = 1;
+
+implementation
+
+end.
