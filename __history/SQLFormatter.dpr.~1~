@@ -2,8 +2,7 @@ program SQLFormatter;
 
 uses
   Vcl.Forms,
-  UPrincipal in 'UPrincipal.pas' {Form1},
-  UVersionControl in 'UVersionControl.pas';
+  UPrincipal in 'UPrincipal.pas' {Form1};
 
 {$R *.res}
 

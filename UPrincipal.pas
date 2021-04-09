@@ -13,10 +13,6 @@ type
     PageControl1: TPageControl;
     TabNewSQL: TTabSheet;
     TabHistory: TTabSheet;
-    Memo1: TMemo;
-    Memo2: TMemo;
-    Label2: TLabel;
-    Label1: TLabel;
     History: TClientDataSet;
     dsHistory: TDataSource;
     HistoryID: TIntegerField;
@@ -29,9 +25,14 @@ type
     Delete1: TMenuItem;
     Copy1: TMenuItem;
     versionDetails: TLabel;
-    Panel2: TPanel;
-    Button2: TButton;
+    Panel3: TPanel;
+    Memo1: TMemo;
+    Panel4: TPanel;
+    Panel5: TPanel;
+    Memo2: TMemo;
+    Panel6: TPanel;
     Button1: TButton;
+    Button2: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Memo2KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Memo1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);

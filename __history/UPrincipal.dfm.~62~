@@ -137,15 +137,6 @@ object Form1: TForm1
           ExplicitWidth = 634
         end
       end
-      object Button2: TButton
-        Left = 571
-        Top = 503
-        Width = 65
-        Height = 25
-        Caption = 'Clear All'
-        TabOrder = 2
-        OnClick = Button2Click
-      end
     end
     object TabHistory: TTabSheet
       Caption = 'Recent History'
@@ -196,6 +187,15 @@ object Form1: TForm1
         end
       end
     end
+  end
+  object Button2: TButton
+    Left = 575
+    Top = 525
+    Width = 65
+    Height = 25
+    Caption = 'Clear All'
+    TabOrder = 1
+    OnClick = Button2Click
   end
   object History: TClientDataSet
     Aggregates = <>

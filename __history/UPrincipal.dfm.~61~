@@ -100,15 +100,15 @@ object Form1: TForm1
       end
       object Panel4: TPanel
         Left = 0
-        Top = 237
+        Top = 280
         Width = 642
-        Height = 330
+        Height = 287
         Align = alBottom
-        BevelOuter = bvNone
         TabOrder = 1
+        ExplicitTop = 232
         object Memo2: TMemo
           Left = 3
-          Top = 36
+          Top = 40
           Width = 633
           Height = 222
           ScrollBars = ssVertical
@@ -117,9 +117,9 @@ object Form1: TForm1
         end
         object Panel6: TPanel
           AlignWithMargins = True
-          Left = 3
-          Top = 3
-          Width = 636
+          Left = 4
+          Top = 4
+          Width = 634
           Height = 30
           Align = alTop
           Alignment = taLeftJustify
@@ -132,19 +132,10 @@ object Form1: TForm1
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 1
-          ExplicitLeft = 4
-          ExplicitTop = 5
-          ExplicitWidth = 634
+          ExplicitLeft = 3
+          ExplicitTop = 236
+          ExplicitWidth = 636
         end
-      end
-      object Button2: TButton
-        Left = 571
-        Top = 503
-        Width = 65
-        Height = 25
-        Caption = 'Clear All'
-        TabOrder = 2
-        OnClick = Button2Click
       end
     end
     object TabHistory: TTabSheet
@@ -196,6 +187,15 @@ object Form1: TForm1
         end
       end
     end
+  end
+  object Button2: TButton
+    Left = 104
+    Top = 104
+    Width = 99
+    Height = 75
+    Caption = 'Clear'
+    TabOrder = 1
+    OnClick = Button2Click
   end
   object History: TClientDataSet
     Aggregates = <>

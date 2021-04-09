@@ -17,8 +17,6 @@ type
     Memo2: TMemo;
     Label2: TLabel;
     Label1: TLabel;
-    Button2: TButton;
-    Button1: TButton;
     History: TClientDataSet;
     dsHistory: TDataSource;
     HistoryID: TIntegerField;
@@ -31,6 +29,9 @@ type
     Delete1: TMenuItem;
     Copy1: TMenuItem;
     versionDetails: TLabel;
+    Panel2: TPanel;
+    Button2: TButton;
+    Button1: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Memo2KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Memo1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -51,6 +52,7 @@ type
     procedure closeData();
     procedure initData();
     procedure getPathName();
+    procedure getExeVersion();
   public
     { Public declarations }
   end;
@@ -135,11 +137,16 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  versionDetails.Caption := 'Developed by ' + AUTHOR + ' - Version: ' +
+  getExeVersion();
+  getPathName();
+  initData();
+end;
+
+procedure TForm1.getExeVersion;
+begin
+  versionDetails.Caption := 'Developed by ' + AUTHOR + ' - v' +
     MAJOR_VERSION.ToString() + '.' + MINOR_VERSION.ToString() + '.' +
     REVISION.ToString();
-
-  initData();
 end;
 
 procedure TForm1.getPathName;
