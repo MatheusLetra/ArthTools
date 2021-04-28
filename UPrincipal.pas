@@ -10,29 +10,41 @@ uses
 
 type
   TForm1 = class(TForm)
-    PageControl1: TPageControl;
-    TabNewSQL: TTabSheet;
-    TabHistory: TTabSheet;
     History: TClientDataSet;
     dsHistory: TDataSource;
     HistoryID: TIntegerField;
     HistoryINPUT: TMemoField;
     HistoryOUTPUT: TMemoField;
-    DBGrid1: TDBGrid;
-    Panel1: TPanel;
-    btnClearHistory: TButton;
     PopupMenu1: TPopupMenu;
     Delete1: TMenuItem;
     Copy1: TMenuItem;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    PageControl2: TPageControl;
+    TabNewSQL: TTabSheet;
     versionDetails: TLabel;
     Panel3: TPanel;
     Memo1: TMemo;
-    Panel4: TPanel;
     Panel5: TPanel;
+    Button1: TButton;
+    Panel4: TPanel;
     Memo2: TMemo;
     Panel6: TPanel;
-    Button1: TButton;
     Button2: TButton;
+    TabHistory: TTabSheet;
+    DBGrid1: TDBGrid;
+    Panel1: TPanel;
+    btnClearHistory: TButton;
+    TabSheet2: TTabSheet;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    Button3: TButton;
+    Label3: TLabel;
+    Edit3: TEdit;
+    ComboBox1: TComboBox;
+    Label4: TLabel;
     procedure Button1Click(Sender: TObject);
     procedure Memo2KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Memo1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -46,6 +58,11 @@ type
       DisplayText: Boolean);
     procedure Delete1Click(Sender: TObject);
     procedure Copy1Click(Sender: TObject);
+    procedure Edit1KeyPress(Sender: TObject; var Key: Char);
+    procedure Edit2KeyPress(Sender: TObject; var Key: Char);
+    procedure Button3Click(Sender: TObject);
+    procedure ComboBox1Change(Sender: TObject);
+    procedure PageControl1Change(Sender: TObject);
   private
     { Private declarations }
     PathExe: String;
@@ -94,6 +111,83 @@ begin
   Memo2.Lines.Clear;
 end;
 
+procedure TForm1.Button3Click(Sender: TObject);
+const ConversionFactorCmPix = 0.026458333333333;
+      ConversionFactorMmCm  = 10;
+var
+  Milimeters, Centimeters, Pixels : Double;
+begin
+  Milimeters  := StrToFloatDef(Edit3.Text, 0);
+  Centimeters := StrToFloatDef(Edit1.Text, 0);
+  Pixels      := StrToFloatDef(Edit2.Text, 0);
+
+
+  if ComboBox1.ItemIndex = 0 then
+  begin
+    Edit1.Text := '0';
+    Edit2.Text := '0';
+    if Milimeters > 0 then
+    begin
+      Centimeters := Milimeters / ConversionFactorMmCm;
+      Pixels      := Centimeters / ConversionFactorCmPix;
+    end;
+  end
+  else if ComboBox1.ItemIndex = 1 then
+  begin
+    Edit3.Text := '0';
+    Edit2.Text := '0';
+    if Centimeters > 0 then
+    begin
+      Pixels      := Centimeters / ConversionFactorCmPix;
+      Milimeters  := Centimeters * ConversionFactorMmCm;
+    end;
+  end
+  else if ComboBox1.ItemIndex = 2 then
+  begin
+    Edit3.Text := '0';
+    Edit1.Text := '0';
+    if Pixels > 0 then
+    begin
+      Centimeters := Pixels * ConversionFactorCmPix;
+      Milimeters  := Centimeters * ConversionFactorMmCm;
+    end;
+  end;
+
+  Edit1.Text := FloatToStr(Centimeters);
+  Edit2.Text := FloatToStr(Pixels);
+end;
+
+procedure TForm1.ComboBox1Change(Sender: TObject);
+begin
+  if ComboBox1.ItemIndex = 0 then
+  begin
+    Edit1.Text := '0';
+    Edit2.Text := '0';
+    Edit1.Enabled := False;
+    Edit2.Enabled := False;
+    Edit3.Enabled := True;
+    Edit3.SetFocus;
+  end
+  else if ComboBox1.ItemIndex = 1 then
+  begin
+    Edit3.Text := '0';
+    Edit2.Text := '0';
+    Edit3.Enabled := False;
+    Edit2.Enabled := False;
+    Edit1.Enabled := True;
+    Edit1.SetFocus;
+  end
+  else if ComboBox1.ItemIndex = 2 then
+  begin
+    Edit3.Text := '0';
+    Edit1.Text := '0';
+    Edit3.Enabled := False;
+    Edit1.Enabled := False;
+    Edit2.Enabled := True;
+    Edit2.SetFocus;
+  end
+end;
+
 procedure TForm1.Copy1Click(Sender: TObject);
 begin
   Memo1.Lines.Text := HistoryINPUT.Text;
@@ -104,6 +198,18 @@ end;
 procedure TForm1.Delete1Click(Sender: TObject);
 begin
   History.Delete;
+end;
+
+procedure TForm1.Edit1KeyPress(Sender: TObject; var Key: Char);
+begin
+  if not (Key in ['0'..'9',',', #8, #13]) then
+    Key := #0;
+end;
+
+procedure TForm1.Edit2KeyPress(Sender: TObject; var Key: Char);
+begin
+  if not (Key in ['0'..'9',',', #8, #13]) then
+    Key := #0;
 end;
 
 function TForm1.FormatText(OriginalText: String): String;
@@ -205,6 +311,24 @@ begin
   begin
     TMemo(Sender).SelectAll;
     Key := 0;
+  end;
+end;
+
+procedure TForm1.PageControl1Change(Sender: TObject);
+begin
+  if PageControl1.ActivePage = TabSheet2 then
+  begin
+    if Edit3.Enabled then
+      Edit3.SetFocus
+    else if Edit2.Enabled then
+       Edit2.SetFocus
+    else
+       Edit1.SetFocus
+  end
+  else
+  begin
+    PageControl2.ActivePage := TabNewSQL;
+    Memo1.SetFocus;
   end;
 end;
 
